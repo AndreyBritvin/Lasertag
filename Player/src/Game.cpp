@@ -38,7 +38,7 @@ void print_button(Button_t *button)
     //Serial.println("----------------------");
 }
 
-void shoot(Player_t *player)
+void shoot(Player_t *player, IRsend *irsend)
 {
 	if (player->hp == 0) // TODO: rethink this logic
 	{
@@ -54,7 +54,7 @@ void shoot(Player_t *player)
 	
 	player->ammo--;
 	
-	//ir.send();
+	irsend->sendNEC(0x00FFE01FUL);	// TODO: redo with user_id
 	
 	soundShot();
 }

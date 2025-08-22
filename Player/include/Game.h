@@ -1,6 +1,8 @@
 #ifndef GAME_H__
 #define GAME_H__
 
+#include <IRsend.h>
+
 struct Button_t {
 	const int pin;
 	int state;
@@ -19,7 +21,7 @@ struct Player_t {
 void debounce(Button_t *button);
 void print_button(Button_t *button);
 
-void shoot (Player_t *player);
+void shoot (Player_t *player, IRsend *irsend);
 void hit   (Player_t *player);
 void reload(Player_t *player);
 
