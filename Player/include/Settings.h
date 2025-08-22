@@ -1,3 +1,6 @@
+#ifndef SETTINGS_H__
+#define SETTINGS_H__
+
 #define USER_ID
 #define CMND_ID
 
@@ -13,3 +16,15 @@
 
 #define SHOT_PIN 26
 #define RELD_PIN 27
+
+
+const int LED_PIN_ARR[] =  {LED_1_PIN,
+                            LED_2_PIN,
+                            LED_3_PIN,
+                            LED_4_PIN};
+							
+							
+void set_pin_mode();
+void test_pins(int duration);							
+
+#endif // SETTINGS_H__
