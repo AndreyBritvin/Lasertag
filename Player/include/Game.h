@@ -9,7 +9,18 @@ struct Button_t {
 	unsigned long debounce_delay; 
 };
 
+struct Player_t {
+	bool is_alive;
+	bool can_fire;
+	int ammo;
+	int hp;
+};
+
 void debounce(Button_t *button);
 void print_button(Button_t *button);
+
+void shoot (Player_t *player);
+void hit   (Player_t *player);
+void reload(Player_t *player);
 
 #endif // GAME_H__

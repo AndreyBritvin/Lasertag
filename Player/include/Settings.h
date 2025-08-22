@@ -4,6 +4,8 @@
 #define USER_ID
 #define CMND_ID
 
+#define INITIAL_AMMO 5
+
 #define LED_1_PIN 18
 #define LED_2_PIN 5
 #define LED_3_PIN 17

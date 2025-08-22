@@ -37,3 +37,37 @@ void print_button(Button_t *button)
 
     //Serial.println("----------------------");
 }
+
+void shoot(Player_t *player)
+{
+	if (player->hp == 0) // TODO: rethink this logic
+	{
+		soundDeath();
+		return;
+	}
+	
+	if (player->ammo == 0)
+	{
+		soundEmptyMag();
+		return;
+	}
+	
+	player->ammo--;
+	
+	//ir.send();
+	
+	soundShot();
+}
+
+void hit(Player_t *player)
+{
+	
+}
+
+void reload(Player_t *player)
+{
+	soundReload();
+	// need more delay?
+	player->ammo = INITIAL_AMMO;
+}
+
