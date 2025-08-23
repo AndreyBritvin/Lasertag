@@ -59,9 +59,15 @@ void shoot(Player_t *player, IRsend *irsend)
 	soundShot();
 }
 
-void hit(Player_t *player)
+void check_hit(Player_t *player, IRrecv *irrecv, decode_results *results)
 {
-	
+	if (irrecv->decode(results)) {
+    if (results->value == 0xFFE01F) // TODO: make more complicated shoot detection
+    {
+      Serial.println("Shoot");
+    }
+    irrecv->resume();  // Receive the next value
+  }
 }
 
 void reload(Player_t *player)

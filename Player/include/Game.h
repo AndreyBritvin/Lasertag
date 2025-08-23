@@ -2,6 +2,7 @@
 #define GAME_H__
 
 #include <IRsend.h>
+#include <IRrecv.h>
 
 struct Button_t {
 	const int pin;
@@ -21,8 +22,8 @@ struct Player_t {
 void debounce(Button_t *button);
 void print_button(Button_t *button);
 
-void shoot (Player_t *player, IRsend *irsend);
-void hit   (Player_t *player);
-void reload(Player_t *player);
+void shoot    (Player_t *player, IRsend *irsend);
+void check_hit(Player_t *player, IRrecv *irrecv, decode_results *results);
+void reload   (Player_t *player);
 
 #endif // GAME_H__
