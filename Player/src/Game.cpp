@@ -54,19 +54,30 @@ void shoot(Player_t *player, IRsend *irsend)
 	
 	player->ammo--;
 	
-	irsend->sendNEC(0x00FFE01FUL);	// TODO: redo with user_id
+	irsend->sendNEC(generate_code(TEAM_ID, USER_ID));
 	
 	soundShot();
 }
 
 void check_hit(Player_t *player, IRrecv *irrecv, decode_results *results)
 {
-	if (irrecv->decode(results)) {
-    if (results->value == 0xFFE01F) // TODO: make more complicated shoot detection
-    {
-      Serial.println("Shoot");
-    }
-    irrecv->resume();  // Receive the next value
+	if (!(irrecv->decode(results))) 
+  {
+    return;
+  }
+  unsigned long hit_code = results->value; 
+  serialPrintUint64(results->value, HEX);
+  Serial.println("");
+  irrecv->resume();
+  if (!check_code(hit_code))
+  {
+    Serial.println("Wrong CRC");
+    return;
+  }
+  if (hit_code == generate_code(TEAM_ID, USER_ID)) // TODO: add team filter
+  {
+    Serial.println("Shoot (((");
+    soundDeath();
   }
 }
 
@@ -77,3 +88,24 @@ void reload(Player_t *player)
 	player->ammo = INITIAL_AMMO;
 }
 
+unsigned long generate_code(int team_id, int player_id) {
+  // контрольная сумма: сумма байтов team_id и player_id (младший и старший)
+  int checksum = (team_id + (player_id & 0xFF) + (player_id >> 8)) & 0xFF;
+
+  unsigned long long code = 0;
+  code |=  (unsigned long long)team_id;            // биты 0-7
+  code |= ((unsigned long long)player_id << 8);    // биты 8-23
+  code |= ((unsigned long long)checksum << 24);    // биты 24-31
+
+  return code;
+}
+
+bool check_code(unsigned long code) {
+  int team_id   = (uint8_t)  (code        & 0xFF);
+  int player_id = (uint16_t)((code >>  8) & 0xFFFF);
+  int checksum =  (uint8_t) ((code >> 24) & 0xFF);
+
+  int calc_checksum = (team_id + (player_id & 0xFF) + (player_id >> 8)) & 0xFF;
+
+  return (checksum == calc_checksum);
+}

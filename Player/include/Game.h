@@ -3,6 +3,7 @@
 
 #include <IRsend.h>
 #include <IRrecv.h>
+#include <IRutils.h>
 
 struct Button_t {
 	const int pin;
@@ -25,5 +26,8 @@ void print_button(Button_t *button);
 void shoot    (Player_t *player, IRsend *irsend);
 void check_hit(Player_t *player, IRrecv *irrecv, decode_results *results);
 void reload   (Player_t *player);
+
+unsigned long generate_code(int team_id, int player_id);
+bool check_code(unsigned long code);
 
 #endif // GAME_H__

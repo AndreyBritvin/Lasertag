@@ -1,8 +1,8 @@
 #ifndef SETTINGS_H__
 #define SETTINGS_H__
 
-#define USER_ID
-#define CMND_ID
+#define USER_ID 0xDEAD
+#define TEAM_ID 0xC7
 
 #define INITIAL_AMMO 5
 
