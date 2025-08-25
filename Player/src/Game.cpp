@@ -74,10 +74,16 @@ void check_hit(Player_t *player, IRrecv *irrecv, decode_results *results)
     Serial.println("Wrong CRC");
     return;
   }
-  if (hit_code == generate_code(TEAM_ID, USER_ID)) // TODO: add team filter
+  if (hit_code != generate_code(TEAM_ID, USER_ID)) // TODO: add team filter
   {
     Serial.println("Shoot (((");
-    soundDeath();
+    soundHit();
+    player->hp--;
+    if (player->hp == 0)
+    {
+      soundDeath();
+      player->hp = 10; // TODO: make as const
+    }
   }
 }
 

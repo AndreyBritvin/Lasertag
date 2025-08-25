@@ -15,7 +15,7 @@ decode_results results;
 
 Button_t shot_btn = {SHOT_PIN, LOW, LOW, 0, 50};
 Button_t reld_btn = {RELD_PIN, LOW, LOW, 0, 50};
-Player_t player   = {true, true, INITIAL_AMMO, 100};
+Player_t player   = {true, true, INITIAL_AMMO, 10};
 
 void setup()
 {
